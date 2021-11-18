@@ -8,7 +8,8 @@ from PIL import Image
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
-IMG_SM_SIZE = 150
+IMG_X_SIZE = 200
+IMG_Y_SIZE = 150
 
 class LectureSerializer(serializers.ModelSerializer):
 
@@ -28,20 +29,20 @@ class LectureSerializer(serializers.ModelSerializer):
         img = Image.open(image)
 
         # Resize and Center crop
-        if img.width > img.height:
-            new_width = int(img.width * IMG_SM_SIZE / img.height)
-            new_height = IMG_SM_SIZE
-            crop_x1 = int((new_width - IMG_SM_SIZE) / 2)
+        if (img.width / img.height) > (IMG_X_SIZE / IMG_Y_SIZE):
+            new_width = int(img.width * IMG_Y_SIZE / img.height)
+            new_height = IMG_Y_SIZE
+            crop_x1 = int((new_width - IMG_X_SIZE) / 2)
             crop_y1 = 0
-            crop_x2 = int((new_width + IMG_SM_SIZE) / 2)
-            crop_y2 = IMG_SM_SIZE
+            crop_x2 = int((new_width + IMG_X_SIZE) / 2)
+            crop_y2 = IMG_Y_SIZE
         else:
-            new_width = IMG_SM_SIZE
-            new_height = int(img.height * IMG_SM_SIZE / img.width)
+            new_width = IMG_X_SIZE
+            new_height = int(img.height * IMG_X_SIZE / img.width)
             crop_x1 = 0
-            crop_y1 = int((new_height - IMG_SM_SIZE) / 2)
-            crop_x2 = IMG_SM_SIZE
-            crop_y2 = int((new_height + IMG_SM_SIZE) / 2)
+            crop_y1 = int((new_height - IMG_Y_SIZE) / 2)
+            crop_x2 = IMG_X_SIZE
+            crop_y2 = int((new_height + IMG_Y_SIZE) / 2)
 
         img = img.resize((new_width, new_height))
         img = img.crop((crop_x1, crop_y1, crop_x2, crop_y2))       

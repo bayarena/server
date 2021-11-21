@@ -1,5 +1,6 @@
 from .models import Motivator
 from rest_framework import serializers
+from lecture.serializers import LectureSerializer
 
 import io
 import os
@@ -11,6 +12,16 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 IMG_SM_SIZE = 60
 
 class MotivatorSerializer(serializers.ModelSerializer):
+
+    lectures = serializers.SerializerMethodField('motivator_lectures')
+
+    def motivator_lectures(self, instance):
+        lecs = []
+        for lec in instance.lecture_set.all():
+            ser = LectureSerializer(lec)
+            lecs.append(ser.data)
+        return lecs
+
     class Meta:
         model = Motivator
         fields = '__all__'

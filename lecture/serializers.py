@@ -67,8 +67,12 @@ class LectureSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
-        instance.subtitle = validated_data.get('subtitle', instance.subtitle)
         instance.date = validated_data.get('date', instance.date)
+
+        instance.category = validated_data.get('category', instance.category)
+        instance.description = validated_data.get('description', instance.description)
+        instance.theme = validated_data.get('theme', instance.theme)
+
         instance.motivators.set(validated_data.get('motivators', instance.motivators))
 
         if validated_data.get('image') is not None:

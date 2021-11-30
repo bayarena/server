@@ -72,6 +72,7 @@ class LectureSerializer(serializers.ModelSerializer):
         instance.category = validated_data.get('category', instance.category)
         instance.description = validated_data.get('description', instance.description)
         instance.theme = validated_data.get('theme', instance.theme)
+        instance.difficulty = validated_data.get('difficulty', instance.difficulty)
 
         instance.motivators.set(validated_data.get('motivators', instance.motivators))
 

@@ -1,5 +1,6 @@
 from .models import Category
 from rest_framework import serializers
+from lecture.serializers import LectureSerializer
 
 import io
 import os
@@ -12,6 +13,15 @@ IMG_X_SIZE = 520
 IMG_Y_SIZE = 200
 
 class CategorySerializer(serializers.ModelSerializer):
+    
+    lectures = serializers.SerializerMethodField('motivator_lectures')
+
+    def motivator_lectures(self, instance):
+        lecs = []
+        for lec in instance.lecture_set.all():
+            ser = LectureSerializer(lec)
+            lecs.append(ser.data)
+        return lecs
 
     class Meta:
         model = Category

@@ -14,12 +14,18 @@ IMG_Y_SIZE = 150
 class LectureSerializer(serializers.ModelSerializer):
 
     thumbs = serializers.SerializerMethodField('motivator_thumbs')
+    tag = serializers.SerializerMethodField(method_name='category_title')
 
     def motivator_thumbs(self, instance):
         thumbs = []
         for motivator in instance.motivators.all():
             thumbs.append(motivator.image_thumb.url)
-        return thumbs 
+        return thumbs
+
+    def category_title(self, instance):
+        if instance.category is None :
+            return "미분류"
+        return instance.category.title
 
     class Meta:
         model = Lecture

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'motivator.apps.MotivatorConfig',
     'lecture.apps.LectureConfig',
+    'category.apps.CategoryConfig',
     "corsheaders"
 ]
 

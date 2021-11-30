@@ -79,6 +79,7 @@ class MotivatorSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.name_eng = validated_data.get('name_eng', instance.name_eng)
         instance.name_kor = validated_data.get('name_kor', instance.name_kor)
+        instance.description = validated_data.get('description', instance.description)
 
         if validated_data.get('image') is not None:
             instance.image = validated_data.get('image')

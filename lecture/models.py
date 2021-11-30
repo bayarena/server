@@ -1,5 +1,6 @@
 from django.db import models
 from motivator.models import Motivator
+from category.models import Category
 
 class Lecture(models.Model):
 	class Meta:
@@ -16,3 +17,4 @@ class Lecture(models.Model):
 	difficulty = models.IntegerField(default=0)
 
 	motivators = models.ManyToManyField(Motivator)
+	category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)

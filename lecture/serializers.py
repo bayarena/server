@@ -8,8 +8,8 @@ from PIL import Image
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
-IMG_X_SIZE = 200
-IMG_Y_SIZE = 150
+IMG_X_SIZE = 400
+IMG_Y_SIZE = 300
 
 class LectureSerializer(serializers.ModelSerializer):
 

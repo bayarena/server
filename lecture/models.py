@@ -10,6 +10,8 @@ class Lecture(models.Model):
 	date = models.DateTimeField()
 	image = models.ImageField(null=True)
 
+	main_image = models.ImageField(null=True)
+
 	category = models.CharField(max_length=70, blank=True)
 	description = models.CharField(max_length=300, blank=True)
 	theme = models.CharField(max_length=70, blank=True)

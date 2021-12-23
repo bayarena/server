@@ -16,4 +16,12 @@ class LectureViewSet(viewsets.ModelViewSet):
 				return Lecture.objects.all().order_by("-date")[0:length_int]
 			except ValueError:
 				pass
+
+		staged = self.request.query_params.get('staged')
+		if staged is not None:
+			try:
+				return Lecture.objects.filter(staging__gt=0)
+			except :
+				pass
+
 		return Lecture.objects.all()

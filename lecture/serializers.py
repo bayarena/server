@@ -102,6 +102,8 @@ class LectureSerializer(serializers.ModelSerializer):
         if validated_data.get('image') is not None:
             instance.image = validated_data.get('image', instance.image)
 
+        instance.main_image = validated_data.get('main_image', instance.main_image)
+
         instance.save()
         return instance
 

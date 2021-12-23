@@ -1,5 +1,3 @@
-from django.conf import settings
-
 from .models import Lecture
 from rest_framework import serializers
 
@@ -18,14 +16,23 @@ class LectureSerializer(serializers.ModelSerializer):
     meta_motivator = serializers.SerializerMethodField('motivators_metadata')
     tag = serializers.SerializerMethodField(method_name='category_title')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     def motivators_metadata(self, instance):
         meta_motivators = []
+        request = None
+
+        if self.context.get("parent_request") :
+            request = self.context.get("parent_request")
+        else :
+            request = self.context['view'].request
 
         for motivator in instance.motivators.all():
             meta_motivators.append({
                 'id': motivator.id,
                 'name_kor' : motivator.name_kor,
-                'image_thumb' : settings.BASE_URL + motivator.image_thumb.url
+                'image_thumb' : request.build_absolute_uri(motivator.image_thumb.url)
                 })
         return meta_motivators
 

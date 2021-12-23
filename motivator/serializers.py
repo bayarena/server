@@ -27,7 +27,7 @@ class MotivatorSerializer(serializers.ModelSerializer):
     def motivator_lectures(self, instance):
         lecs = []
         for lec in instance.lecture_set.all():
-            ser = LectureSerializer(lec)
+            ser = LectureSerializer(lec, context={'parent_request': self.context['request']})
             lecs.append(ser.data)
         return lecs
 

@@ -20,7 +20,7 @@ class LectureViewSet(viewsets.ModelViewSet):
 		staged = self.request.query_params.get('staged')
 		if staged is not None:
 			try:
-				return Lecture.objects.filter(staging__gt=0)
+				return Lecture.objects.filter(staging__gt=0).order_by("staging")
 			except :
 				pass
 

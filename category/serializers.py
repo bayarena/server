@@ -16,6 +16,15 @@ class CategorySerializer(serializers.ModelSerializer):
     
     lectures = serializers.SerializerMethodField('motivator_lectures')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # DynamicFieldsModelSerializer
+        if self.context['request'].query_params.get('meta') is not None :
+            allowed = set(['id', 'title', 'thumb'])
+            for field_name in set(self.fields) - allowed:
+                self.fields.pop(field_name)
+
     def motivator_lectures(self, instance):
         lecs = []
         for lec in instance.lecture_set.all():

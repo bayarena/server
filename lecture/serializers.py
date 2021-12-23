@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from .models import Lecture
 from rest_framework import serializers
 
@@ -13,14 +15,19 @@ IMG_Y_SIZE = 300
 
 class LectureSerializer(serializers.ModelSerializer):
 
-    thumbs = serializers.SerializerMethodField('motivator_thumbs')
+    meta_motivator = serializers.SerializerMethodField('motivators_metadata')
     tag = serializers.SerializerMethodField(method_name='category_title')
 
-    def motivator_thumbs(self, instance):
-        thumbs = []
+    def motivators_metadata(self, instance):
+        meta_motivators = []
+
         for motivator in instance.motivators.all():
-            thumbs.append(motivator.image_thumb.url)
-        return thumbs
+            meta_motivators.append({
+                'id': motivator.id,
+                'name_kor' : motivator.name_kor,
+                'image_thumb' : settings.BASE_URL + motivator.image_thumb.url
+                })
+        return meta_motivators
 
     def category_title(self, instance):
         if instance.category is None :

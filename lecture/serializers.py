@@ -95,6 +95,8 @@ class LectureSerializer(serializers.ModelSerializer):
         instance.difficulty = validated_data.get('difficulty', instance.difficulty)
         instance.time = validated_data.get('time', instance.time)
 
+        instance.staging = validated_data.get('staging', instance.staging)
+
         instance.motivators.set(validated_data.get('motivators', instance.motivators))
 
         if validated_data.get('image') is not None:

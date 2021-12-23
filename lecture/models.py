@@ -16,5 +16,7 @@ class Lecture(models.Model):
 	time = models.IntegerField(default=0)
 	difficulty = models.IntegerField(default=0)
 
+	staging = models.IntegerField(default=-1)
+
 	motivators = models.ManyToManyField(Motivator)
 	category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)

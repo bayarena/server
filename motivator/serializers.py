@@ -15,6 +15,15 @@ class MotivatorSerializer(serializers.ModelSerializer):
 
     lectures = serializers.SerializerMethodField('motivator_lectures')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # DynamicFieldsModelSerializer
+        if self.context['request'].query_params.get('meta') is not None :
+            allowed = set(['id', 'name_kor', 'image_thumb', 'expertise', 'priority'])
+            for field_name in set(self.fields) - allowed:
+                self.fields.pop(field_name)
+
     def motivator_lectures(self, instance):
         lecs = []
         for lec in instance.lecture_set.all():
@@ -81,6 +90,7 @@ class MotivatorSerializer(serializers.ModelSerializer):
         instance.name_kor = validated_data.get('name_kor', instance.name_kor)
         instance.description = validated_data.get('description', instance.description)
         instance.expertise = validated_data.get('expertise', instance.expertise)
+        instance.priority = validated_data.get('priority', instance.priority)
 
         if validated_data.get('image') is not None:
             instance.image = validated_data.get('image')

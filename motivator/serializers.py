@@ -20,7 +20,7 @@ class MotivatorSerializer(serializers.ModelSerializer):
 
         # DynamicFieldsModelSerializer
         if self.context['request'].query_params.get('meta') is not None :
-            allowed = set(['id', 'name_kor', 'image_thumb', 'expertise', 'priority'])
+            allowed = set(['id', 'name_kor', 'image', 'image_thumb', 'expertise', 'priority'])
             for field_name in set(self.fields) - allowed:
                 self.fields.pop(field_name)
 

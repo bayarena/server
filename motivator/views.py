@@ -7,3 +7,6 @@ class MotivatorViewSet(viewsets.ModelViewSet):
 	queryset = Motivator.objects.all()
 	serializer_class = MotivatorSerializer
 	permission_classes = [permissions.AllowAny] # For test
+
+	def get_queryset(self):
+		return Motivator.objects.all().order_by('-priority')

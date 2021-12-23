@@ -76,6 +76,7 @@ class MotivatorSerializer(serializers.ModelSerializer):
         return new_pic
 
     def create(self, validated_data):
+        validated_data['priority'] = Motivator.objects.all().order_by('-priority')[0].priority + 1
 
         if validated_data.get('image') is not None:
             return Motivator.objects.create(

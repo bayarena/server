@@ -141,6 +141,9 @@ REST_FRAMEWORK = {
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
-BASE_URL = "http://" + socket.gethostbyname(socket.gethostname()) + ":" + sys.argv[-1].split(":")[1]
+if len(sys.argv) > 0 :
+    BASE_URL = "http://" + socket.gethostbyname(socket.gethostname()) + ":" + sys.argv[-1].split(":")[-1]
+else :
+    BASE_URL = ""    
 
 CORS_ALLOW_ALL_ORIGINS = True

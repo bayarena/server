@@ -29,10 +29,13 @@ class LectureSerializer(serializers.ModelSerializer):
             request = self.context['view'].request
 
         for motivator in instance.motivators.all():
+            image_thumb = None
+            if motivator.image_thumb :
+                image_thumb = request.build_absolute_uri(motivator.image_thumb.url)
             meta_motivators.append({
                 'id': motivator.id,
                 'name_kor' : motivator.name_kor,
-                'image_thumb' : request.build_absolute_uri(motivator.image_thumb.url)
+                'image_thumb' : image_thumb
                 })
         return meta_motivators
 

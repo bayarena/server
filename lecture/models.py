@@ -8,7 +8,7 @@ class Lecture(models.Model):
 	class Meta:
 		ordering = ['date']
 
-	ticket = models.UUIDField(default=uuid.uuid4, unique=True)
+	ticket = models.CharField(default=uuid.uuid4, max_length=70)
 
 	title = models.CharField(max_length=70)
 	date = models.DateTimeField()
